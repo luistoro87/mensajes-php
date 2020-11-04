@@ -37,4 +37,3 @@ ALTER TABLE `mensaje`
   ADD CONSTRAINT `mensaje_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
-/* hola mundo 
