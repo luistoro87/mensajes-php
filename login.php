@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
 	<body>
-		<header>
+		<header><center>
 			<h1>mensajes App</h1>
 			<h2>Inicio de sesión</h2>
 		</header>
@@ -30,12 +30,13 @@
 					  	</div>
 					  	<button type="submit" name="enviar" class="btn btn-primary">Enviar</button>
 					</form>
+					<p>
 				</div>
 				<div class="col-md-3"></div>
 			</div>
 		</section>
-		<footer>
-			<p>Mensajes App - creado para mostrar Owasp 2020 ©</p>
+		<footer><center>
+			<p>Mensajes App - creado para mostrar vulnerabilidades de Owasp 2020 ©</p>
 		</footer>
 	</body>
 </html>
