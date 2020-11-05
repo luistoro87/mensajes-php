@@ -38,3 +38,6 @@
 		</ sección >
 		< pie de página >
 			< p > App Mensajes - creada para mostrar Owasp 2020 © </ p >
+			</ pie de página >
+	</ cuerpo >
+</ html >
