@@ -4,19 +4,59 @@ include 'conexion.php';
 
 
 if (isset($_POST['enviar'])) {
-	//recibimos las variables del formulario
+	//1. recibimos las variables del formulario
 	$nombre_completo = $_POST['nombre_completo'];
 	$celular = $_POST['celular'];
 	$correo = $_POST['correo'];
 	$clave = $_POST['clave'];
 	$clave2 = $_POST['clave2'];
 
-	//validar nuevamente las contraseñas
-	if ($clave != $clave2 || $clave.length <7) {
+	//2. validar nuevamente las contraseñas
+	if ($clave != $clave2 || strlen($clave)<7) {
 		$respuesta = "Las contraseñas no coinciden o son menores a 7 caracteres";
-	}
+	}else{
+		//3. vamos a validar que no exista el correo o el celular en base de datos
+		$conexion = $GLOBALS['enlace'];
+		$consultaCorreo = "SELECT * FROM `usuarios` WHERE `correo` = '$correo' OR `celular` = '$celular'";
+		$ejecutarconsultaCorreo = $conexion->query($consultaCorreo);
 
-	//conectarnos a la BD
+		if (mysqli_num_rows($ejecutarconsultaCorreo) > 0) {
+
+			//validamos si es el correo o el celular, el que ya está registrado
+			$resultado = $ejecutarconsultaCorreo->fetch_array(MYSQLI_ASSOC);
+
+			if ($resultado['correo'] == $correo) {
+			 	$respuesta = "el correo ya se encuentran registrado";
+			} 
+			if ($resultado['celular'] == $celular){
+				$respuesta = "el celular ya se encuentran registrado";
+			}			
+		}else{
+			//4. inserción en la bd
+			$consultaRegistro = "INSERT INTO `usuarios` (`nombre_completo`, `correo`, `celular`, `clave`) VALUES ( '$nombre_completo', '$correo', '$celular', '$clave')";
+		
+			$ejecutar = $conexion->query($consultaRegistro);
+
+			if ($ejecutar === TRUE) {
+			  	echo "<div class='alert alert-success' role='alert'>
+	  				Usuario creado correctamente, ahora podrá <a href='login.php'>inicia sesión</a><br>
+				</div>";
+			} else {
+				$respuesta = "no se pudo ingresar el usuario, contacte al soporte";
+			}
+		}
+
+		//mostramos el mensaje de error
+		if (isset($respuesta)) {
+			echo "<div class='alert alert-danger' role='alert'>
+	  			Error, no se pudo crear el usuario: ".$respuesta." <br>
+			</div>";
+		}
+
+
+		echo " <br>";
+		mysqli_close($enlace);
+	}
 
 }
 

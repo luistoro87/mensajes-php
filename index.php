@@ -1,7 +1,10 @@
-<?php
-	if (isset($_session['id_usuario'])) {
-		header("Location: panel.php");
-	}else {
-		header("Location: login.php");
+<? php
+
+incluir  'conexion.php' ;
+
+	if ( isset ( $ _session [ 'id_usuario' ])) {
+		encabezado ( "Ubicación: panel.php" );
+	} más {
+		encabezado ( "Ubicación: login.php" );
 	}
 ?>
