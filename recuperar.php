@@ -23,6 +23,24 @@ $mail = new PHPMailer();
 if (isset($_POST['enviar'])) {
 	//1. buscar el correo en bd
 	$correo = $_POST['usuario'];
+
+
+	function limpiarCorreo($campo){
+		$campoLimpio = str_replace('"', "", $campo);
+		$campoLimpio = str_replace("'", "", $campoLimpio);
+		$campoLimpio = str_replace("=", "", $campoLimpio);
+		$campoLimpio = str_replace(" ", "", $campoLimpio);
+		$campoLimpio = str_replace(";", "", $campoLimpio);
+		$campoLimpio = str_replace("--", "", $campoLimpio);
+		$campoLimpio = str_replace("<", "", $campoLimpio);
+		$campoLimpio = str_replace("/>", "", $campoLimpio);
+		$campoLimpio = str_replace(">", "", $campoLimpio);
+		$campoLimpio = str_replace("alert(", "", $campoLimpio);
+
+		return $campoLimpio;
+	}
+	$correo = limpiarCorreo($correo);
+
 	$conexion = $GLOBALS['enlace'];
 
 	$consulta = "SELECT * FROM `usuarios` WHERE `correo` = '$correo' ";
@@ -76,6 +94,8 @@ if (isset($_POST['enviar'])) {
 	}
 
 	echo "<div class='alert alert-info' role='alert'>".$respuesta."</div>";
+
+	mysqli_close($enlace);
 }
 
 ?>
